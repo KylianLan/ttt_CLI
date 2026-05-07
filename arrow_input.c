@@ -1,6 +1,7 @@
-#include <stdio.h>
 #include <termios.h>
+#include <stdio.h>
 #include <unistd.h>
+
 
 #define SET_RAW_MODE(); \
     struct termios orig_termios; \

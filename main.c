@@ -1,8 +1,6 @@
-#include "input.c"
 #include "menu.c"
-#include "arrow_input.c"
 
 int main(void) {
-    read_arrows();
+    showMenu();
     return 0;
 }
