@@ -4,7 +4,7 @@
 
 /// @brief Reads a single character from standard input and returns it.
 /// @return The character read from standard input. Returns '\0' if an error occurred.
-char read_char() {
+char read_char(void) {
     char c;
     printf("> ");
     if (scanf(" %c", &c) == 1) {
@@ -15,16 +15,20 @@ char read_char() {
 }
 
 /// @brief Reads a string from standard input and returns it.
+/// @param size The maximum size of the string variable to be returned
 /// @return A pointer to the read string, or NULL if an error occurred.
 /// @note The string has maximum length of 99 characters (plus the null terminator).
 /// @note The trailing newline character is automatically removed from the returned string.
 /// @warning The caller is responsible for freeing the returned string.
-char* read_string(void) {
-    char* string = malloc(100 * sizeof(char));
+char* read_string(int size) {
+    if (!size) {
+        size = 100;
+    }
+    char* string = malloc(size * sizeof(char));
     if (string == NULL) return NULL;
 
     printf("> ");
-    if (fgets(string, 100, stdin) == NULL) {
+    if (fgets(string, size, stdin) == NULL) {
         free(string);
         return NULL;
     }
