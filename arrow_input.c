@@ -38,31 +38,32 @@ void reset_mode(struct termios *orig_termios) {
  */
 int read_arrows(void) {
     SET_RAW_MODE();
+    int result = -1;
     
     int ch;
-    while ((ch = getchar()) != 'q') {
+    while (1) {
+        int ch = getchar();
+
         if (ch == '\033') {
             getchar();
             switch (getchar()) {
                 case 'A':
-                    printf("Up arrow\n");
-                    return 1;
+                    result = 1;
+                    break;
                 case 'B':
-                    printf("Down arrow\n");
-                    return 2;
+                    result = 2;
+                    break;
                 case 'C':
-                    printf("Right arrow\n");
-                    return 3;
+                    result = 3;
+                    break;
                 case 'D':
-                    printf("Left arrow\n");
-                    return 4;
-                default:
-                    printf("Unknown key\n");
-                    return -1;
+                    result = 4;
+                    break;
             }
+            if (result != -1) break;
         }
     }
 
     RESET_MODE();
-    return -1;
+    return result;
 }
