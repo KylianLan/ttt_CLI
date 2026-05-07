@@ -3,15 +3,6 @@
 #include <unistd.h>
 
 
-#define SET_RAW_MODE(); \
-    struct termios orig_termios; \
-    tcgetattr(STDIN_FILENO, &orig_termios); \
-    set_raw_mode(&orig_termios);
-
-#define RESET_MODE(); \
-    reset_mode(&orig_termios);
-
-
 void set_raw_mode(struct termios *orig_termios) {
     struct termios raw = *orig_termios;
     raw.c_lflag &= ~(ICANON | ECHO);
@@ -37,7 +28,10 @@ void reset_mode(struct termios *orig_termios) {
  * * - -1: Error occurred
  */
 int read_arrows(void) {
-    SET_RAW_MODE();
+    struct termios orig_termios;
+    tcgetattr(STDIN_FILENO, &orig_termios);
+    set_raw_mode(&orig_termios);
+
     int result = -1;
     
     int ch;
@@ -63,7 +57,7 @@ int read_arrows(void) {
             if (result != -1) break;
         }
     }
-
-    RESET_MODE();
+    
+    reset_mode(&orig_termios);
     return result;
 }

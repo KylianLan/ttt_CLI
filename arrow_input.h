@@ -1,4 +1,4 @@
-#ifdef ARROW_INPUT_H
+#ifndef ARROW_INPUT_H
 #define ARROW_INPUT_H
 
 #include <termios.h>
