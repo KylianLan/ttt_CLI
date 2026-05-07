@@ -1,6 +1,6 @@
 #include "menu.h"
 
 int main(void) {
-    showMenu();
+    show_menu();
     return 0;
 }

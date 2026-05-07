@@ -2,6 +2,6 @@
 #define MENU_H
 
 void display_title(void);
-void showMenu(void);
+void show_menu(void);
 
 #endif
