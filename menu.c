@@ -3,6 +3,7 @@
 #include "arrow_input.h"
 
 #define clear_screen() printf("\e[1;1H\e[2J")
+#define move_up_and_clear()  printf("\033[A\033[2K")
 
 void green(void) {
     printf("\033[0;32m");
@@ -33,7 +34,7 @@ void display_options(int selection) {
         if (selection == i) {
             green();
         }
-        printf("%s\n", options[i]);
+        printf("\t%s\n", options[i]);
         reset_color();
     }
 }
@@ -41,9 +42,20 @@ void display_options(int selection) {
 void show_menu(void) {
     display_title();
     
+    int res = 0;
     int selection = 0;
     display_options(selection);
     while (1) {
+        res = read_arrows();
+        if (res == 1 || res == 2) selection = !selection;
+        else if (res == 3) {
+            if (selection == 1) {
+                break;
+            }
+        }
+        move_up_and_clear();
+        move_up_and_clear();
+        display_options(selection);
         
     }
 }
