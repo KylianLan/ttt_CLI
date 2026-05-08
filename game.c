@@ -1,6 +1,6 @@
 #include <stdio.h>
 
-// #include "arrow_input.h"
+#include "arrow_input.h"
 
 #define clear_screen() printf("\e[1;1H\e[2J")
 
@@ -37,7 +37,7 @@ void display_board(struct game* g) {
     }
 }
 
-void start_game(void) {
+struct game start_game(void) {
     clear_screen();
 
     struct game g;
@@ -49,6 +49,7 @@ void start_game(void) {
     }
 
     display_board(&g);
+    return g;
 }
 
 void place_mark(struct game* g, int row, int col) {
@@ -56,7 +57,28 @@ void place_mark(struct game* g, int row, int col) {
 }
 
 void select_cell(struct game* g) {
+    int res = -1;
+    int x_selection = 0;
+    int y_selection = 0;
 
+    while ((res = read_arrows(1)) != 5) {
+        switch (res) {
+            case 1:
+                if (y_selection > 0) y_selection--;
+                break;
+            case 2:
+                if (y_selection < 2) y_selection++;
+                break;
+            case 3:
+                if (x_selection < 2) x_selection++;
+                break;
+            case 4:
+                if (x_selection > 0) x_selection--;
+                break;
+        }
+    }
+    printf("Coucou\n");
+    printf("X = %d\tY = %d\n", x_selection, y_selection);
 }
 
 void check_win(struct game* g) {
@@ -64,10 +86,10 @@ void check_win(struct game* g) {
 }
 
 int main() {
-    start_game();
+    struct game g = start_game();
 
     for (int i = 0; i < 9; i++) {
-
+        select_cell(&g);
     }
 
     return 0;

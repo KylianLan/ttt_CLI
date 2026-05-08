@@ -13,6 +13,9 @@ void reset_color(void) {
     printf("\033[0m");
 }
 
+/**
+ * @brief Displays the title, can be modified by editing title_ascii.txt
+ */
 void display_title(void) {
     clear_screen();
 
@@ -29,6 +32,10 @@ void display_title(void) {
     fclose(file);
 }
 
+/**
+ * @brief Shows available options and makes the selected one turn green
+ * @param selection The selected option (will become green to show the user which one is selected)
+ */
 void display_options(int selection) {
     char options[2][8] = {{"Start"}, {"Exit"}};
     for (int i = 0; i < 2; i++) {
@@ -40,6 +47,9 @@ void display_options(int selection) {
     }
 }
 
+/**
+ * @brief Handles the menu interactions
+ */
 void show_menu(void) {
     display_title();
     
@@ -47,8 +57,13 @@ void show_menu(void) {
     int selection = 0;
     display_options(selection);
     while (1) {
-        res = read_arrows(1);
-        if (res == 1 || res == 2) selection = !selection;
+        res = read_arrows(1); // reads the arrows input to interact with the menu
+        if (res == 1 || res == 2) selection = !selection; 
+        /**
+         * selection is either 0 or 1
+         * 0 = start the game
+         * 1 = leave the game
+         */
         else if (res == 3 || res == 5) {
             if (selection == 1) {
                 break;
