@@ -53,6 +53,10 @@ void show_menu(void) {
             if (selection == 1) {
                 break;
             }
+            if (selection == 0) {
+                start_game();
+                return;
+            }
         }
         move_up_and_clear();
         move_up_and_clear();
