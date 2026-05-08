@@ -10,6 +10,7 @@ struct game {
     char* players_names[32];
 };
 
+
 void green(void) {
     printf("\033[0;32m");
 }
@@ -69,7 +70,7 @@ void display_board(struct game* g, int x, int y) {
     }
 }
 
-struct game start_game(void) {
+struct game init_game(void) {
     clear_screen();
 
     struct game g;
@@ -123,8 +124,8 @@ void check_win(struct game* g) {
 
 }
 
-int main() {
-    struct game g = start_game();
+void start_game(void) {
+    struct game g = init_game();
     display_board(&g, 0, 0);
 
     for (int i = 0; i < 9; i++) {
@@ -132,6 +133,4 @@ int main() {
         display_board(&g, 0, 0);
         check_win(&g);
     }
-
-    return 0;
 }

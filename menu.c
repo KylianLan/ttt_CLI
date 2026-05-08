@@ -6,13 +6,6 @@
 #define clear_screen() printf("\e[1;1H\e[2J")
 #define move_up_and_clear()  printf("\033[A\033[2K")
 
-void green(void) {
-    printf("\033[0;32m");
-}
-void reset_color(void) {
-    printf("\033[0m");
-}
-
 /**
  * @brief Displays the title, can be modified by editing title_ascii.txt
  */
