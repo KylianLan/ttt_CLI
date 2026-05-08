@@ -20,7 +20,7 @@ void display_board(struct game* g) {
                 } else if (j % 4 == 0 && j !=0) {
                     printf("|");
                 } else {
-                    printf(" ");    
+                    printf(" ");
                 }
             } else {
                 if (j % 4 == 0 && j != 0) {
@@ -39,8 +39,13 @@ void display_board(struct game* g) {
 void start_game(void) {
     clear_screen();
 
-    struct game g = {0};
+    struct game g;
     g.current_player = 0;
+    for (int i = 0; i < 3; i++) {
+        for (int j = 0; j < 3; j++) {
+            g.board[i][j] = -1;
+        }
+    }
 
     display_board(&g);
 }
