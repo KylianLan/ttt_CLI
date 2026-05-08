@@ -48,12 +48,12 @@ struct game start_game(void) {
         }
     }
 
-    display_board(&g);
     return g;
 }
 
 void place_mark(struct game* g, int row, int col) {
-
+    g->board[row][col] = g->current_player;
+    g->current_player = !g->current_player;
 }
 
 void select_cell(struct game* g) {
@@ -77,8 +77,8 @@ void select_cell(struct game* g) {
                 break;
         }
     }
-    printf("Coucou\n");
-    printf("X = %d\tY = %d\n", x_selection, y_selection);
+    
+    place_mark(g, y_selection, x_selection);
 }
 
 void check_win(struct game* g) {
@@ -87,9 +87,12 @@ void check_win(struct game* g) {
 
 int main() {
     struct game g = start_game();
+    display_board(&g);
 
     for (int i = 0; i < 9; i++) {
         select_cell(&g);
+        display_board(&g);
+        check_win(&g);
     }
 
     return 0;
