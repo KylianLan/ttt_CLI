@@ -51,18 +51,6 @@ void start_game(void) {
     display_board(&g);
 }
 
-void place_mark(struct game* g, int row, int col) {
-
-}
-
-void select_cell(struct game* g) {
-
-}
-
-void check_win(struct game* g) {
-
-}
-
 int main() {
     start_game();
 
