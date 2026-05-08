@@ -1,6 +1,7 @@
 #include <stdio.h>
 
 #include "arrow_input.h"
+#include "game.h"
 
 #define clear_screen() printf("\e[1;1H\e[2J")
 #define move_up_and_clear()  printf("\033[A\033[2K")
