@@ -7,17 +7,49 @@
 struct game {
     int board[3][3];
     int current_player; // 0 for X, 1 for O
-    char* players_names[2];
+    char* players_names[32];
 };
 
-void display_board(struct game* g) {
+void green(void) {
+    printf("\033[0;32m");
+}
+void red(void) {
+    printf("\033[0;31m");
+}
+void reset_color(void) {
+    printf("\033[0m");
+}
+
+/**
+ * @brief Checks if a cell is empty or not
+ * @param g: The current game in which the board has to be checked
+ * @param x: The column to be checked
+ * @param y: The row to be checked
+ * * @return
+ * *
+ * * - 1 if the cell is empty
+ * 
+ * * - 0 if the cell is marked
+ */
+int is_cell_empty(struct game* g, int x, int y) {
+    if (g->board[y][x] == -1) return 1;
+    return 0;
+}
+
+void display_board(struct game* g, int x, int y) {
     clear_screen();
     for (int i = 0; i < 5; i++) {
         printf("\t\t");
         for (int j = 0; j < 12; j++) {
             if (i % 2 == 0) {
                 if (j % 2 == 0 && j % 4 != 0) {
-                    printf("%c", (g->board[i / 2][j / 4] == 0 ? 'X' : (g->board[i / 2][j / 4] == 1 ? 'O' : ' ')));
+                    if ((x != -1 && y != -1) &&  (j / 4 == x && i / 2 == y)) {
+                        (!is_cell_empty(g, j/4, i/2) ? red() : green());
+                        printf("%c", ((g->current_player ? 'O' : 'X')));
+                        reset_color();
+                    } else {
+                        printf("%c", (g->board[i / 2][j / 4] == 0 ? 'X' : (g->board[i / 2][j / 4] == 1 ? 'O' : ' ')));
+                    }
                 } else if (j % 4 == 0 && j !=0) {
                     printf("|");
                 } else {
@@ -60,22 +92,28 @@ void select_cell(struct game* g) {
     int res = -1;
     int x_selection = 0;
     int y_selection = 0;
+    int valid_selection = 0;
 
-    while ((res = read_arrows(1)) != 5) {
-        switch (res) {
-            case 1:
-                if (y_selection > 0) y_selection--;
-                break;
-            case 2:
-                if (y_selection < 2) y_selection++;
-                break;
-            case 3:
-                if (x_selection < 2) x_selection++;
-                break;
-            case 4:
-                if (x_selection > 0) x_selection--;
-                break;
+    while (!valid_selection) {
+        while ((res = read_arrows(1)) != 5) {
+            switch (res) {
+                case 1:
+                    if (y_selection > 0) y_selection--;
+                    break;
+                case 2:
+                    if (y_selection < 2) y_selection++;
+                    break;
+                case 3:
+                    if (x_selection < 2) x_selection++;
+                    break;
+                case 4:
+                    if (x_selection > 0) x_selection--;
+                    break;
+            }
+            display_board(g, x_selection, y_selection);
         }
+        if (is_cell_empty(g, x_selection, y_selection)) valid_selection = 1;
+        
     }
     
     place_mark(g, y_selection, x_selection);
@@ -87,11 +125,11 @@ void check_win(struct game* g) {
 
 int main() {
     struct game g = start_game();
-    display_board(&g);
+    display_board(&g, 0, 0);
 
     for (int i = 0; i < 9; i++) {
         select_cell(&g);
-        display_board(&g);
+        display_board(&g, 0, 0);
         check_win(&g);
     }
 
