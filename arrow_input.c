@@ -15,7 +15,8 @@ void reset_mode(struct termios *orig_termios) {
 
 /**
  * @brief Reads the arrow input and returns an integer representing the key pressed.
- * * @return An integer representing the arrow:
+ * @param int whether to use or not enter and space key (0 for no, 1 for yes)
+ * @return An integer representing the arrow:
  * *
  * * - 1: Up arrow
  * 
@@ -25,9 +26,11 @@ void reset_mode(struct termios *orig_termios) {
  * 
  * * - 4: Left arrow
  * 
+ * * - 5: Enter or space key (if the parameter is set to 1)
+ * 
  * * - -1: Error occurred
  */
-int read_arrows(void) {
+int read_arrows(int enter_key) {
     struct termios orig_termios;
     tcgetattr(STDIN_FILENO, &orig_termios);
     set_raw_mode(&orig_termios);
@@ -55,6 +58,10 @@ int read_arrows(void) {
                     break;
             }
             if (result != -1) break;
+        }
+        if (enter_key && (ch == '\n' || ch == ' ')) {
+            result = 5;
+            break;
         }
     }
     

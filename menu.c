@@ -46,9 +46,9 @@ void show_menu(void) {
     int selection = 0;
     display_options(selection);
     while (1) {
-        res = read_arrows();
+        res = read_arrows(1);
         if (res == 1 || res == 2) selection = !selection;
-        else if (res == 3) {
+        else if (res == 3 || res == 5) {
             if (selection == 1) {
                 break;
             }
