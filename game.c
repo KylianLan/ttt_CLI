@@ -7,6 +7,7 @@
 struct game {
     int board[3][3];
     int current_player; // 0 for X, 1 for O
+    char* players_names[2];
 };
 
 void display_board(struct game* g) {
@@ -51,11 +52,23 @@ void start_game(void) {
 }
 
 void place_mark(struct game* g, int row, int col) {
-    
+
+}
+
+void select_cell(struct game* g) {
+
+}
+
+void check_win(struct game* g) {
+
 }
 
 int main() {
     start_game();
+
+    for (int i = 0; i < 9; i++) {
+
+    }
 
     return 0;
 }
