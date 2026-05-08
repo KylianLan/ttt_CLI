@@ -1,6 +1,7 @@
 #include <stdio.h>
 
 #include "arrow_input.h"
+#include "game.h"
 
 #define clear_screen() printf("\e[1;1H\e[2J")
 #define move_up_and_clear()  printf("\033[A\033[2K")
@@ -51,6 +52,10 @@ void show_menu(void) {
         else if (res == 3 || res == 5) {
             if (selection == 1) {
                 break;
+            }
+            if (selection == 0) {
+                start_game();
+                return;
             }
         }
         move_up_and_clear();
