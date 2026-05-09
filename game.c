@@ -120,17 +120,61 @@ void select_cell(struct game* g) {
     place_mark(g, y_selection, x_selection);
 }
 
-void check_win(struct game* g) {
+/**
+ * @brief Checks if a player has won the game or not
+ * @param g: The current game in which the board has to be checked
+ * * @return
+ * *
+ * * - 1 or 0 corresponding to a player's code if they are winning
+ * 
+ * * - -1 if no one won the game
+ */
+int check_win(struct game* g) {
 
+    for (int i = 0; i < 3; i++) {
+        if (g->board[i][0] != -1 &&
+            g->board[i][0] == g->board[i][1] &&
+            g->board[i][1] == g->board[i][2]) {
+                return g->board[i][0];
+            }
+    }
+
+    for (int i = 0; i < 3; i++) {
+        if (g->board[0][i] != -1 &&
+            g->board[0][i] == g->board[1][i] &&
+            g->board[1][i] == g->board[2][i]) {
+                return g->board[0][i];
+            }
+    }
+
+    if (g->board[1][1] != -1) {
+        if (g->board[0][0] == g->board[1][1] && g->board[1][1] == g->board[2][2]) {
+            return g->board[1][1];
+        }
+        if (g->board[0][2] == g->board[1][1] && g->board[1][1] == g->board[2][0]) {
+            return g->board[1][1];
+        }
+    }
+
+    return -1;
 }
 
 void start_game(void) {
     struct game g = init_game();
     display_board(&g, 0, 0);
+    int winner = -1;
 
     for (int i = 0; i < 9; i++) {
         select_cell(&g);
         display_board(&g, 0, 0);
-        check_win(&g);
+        if ((winner = check_win(&g)) != -1) {
+            break;
+        }
+    }
+
+    if (winner != -1) {
+        printf("Player %c wins!\n", (winner == 0 ? 'X' : 'O'));
+    } else {
+        printf("Draw\n");
     }
 }
