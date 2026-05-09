@@ -1,0 +1,61 @@
+#include <termios.h>
+#include <stdio.h>
+#include <unistd.h>
+
+
+/**
+ * @brief Reads the arrow input and returns an integer representing the key pressed.
+ * @param use_enter_key whether to use or not enter and space key (0 for no, 1 for yes)
+ * @return An integer representing the arrow:
+ * *
+ * * - 1: Up arrow
+ * 
+ * * - 2: Down arrow
+ * 
+ * * - 3: Right arrow
+ * 
+ * * - 4: Left arrow
+ * 
+ * * - 5: Enter or space key (if the parameter is set to 1)
+ * 
+ * * - -1: Error occurred
+ */
+int read_arrows(int use_enter_key) {
+    struct termios orig_termios;
+    tcgetattr(STDIN_FILENO, &orig_termios);
+    orig_termios.c_lflag &= ~(ICANON | ECHO);
+    tcsetattr(STDIN_FILENO, TCSAFLUSH, &orig_termios);
+
+    int result = -1;
+    
+    int ch;
+    while (1) {
+        int ch = getchar();
+
+        if (ch == '\033') {
+            getchar();
+            switch (getchar()) {
+                case 'A':
+                    result = 1;
+                    break;
+                case 'B':
+                    result = 2;
+                    break;
+                case 'C':
+                    result = 3;
+                    break;
+                case 'D':
+                    result = 4;
+                    break;
+            }
+            if (result != -1) break;
+        }
+        if (use_enter_key && (ch == '\n' || ch == ' ')) {
+            result = 5;
+            break;
+        }
+    }
+    
+    tcsetattr(STDIN_FILENO, TCSAFLUSH, &orig_termios);
+    return result;
+}
