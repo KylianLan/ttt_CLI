@@ -3,16 +3,6 @@
 #include <unistd.h>
 
 
-void set_raw_mode(struct termios *orig_termios) {
-    struct termios raw = *orig_termios;
-    raw.c_lflag &= ~(ICANON | ECHO);
-    tcsetattr(STDIN_FILENO, TCSAFLUSH, &raw);
-}
-
-void reset_mode(struct termios *orig_termios) {
-    tcsetattr(STDIN_FILENO, TCSAFLUSH, orig_termios);
-}
-
 /**
  * @brief Reads the arrow input and returns an integer representing the key pressed.
  * @param use_enter_key whether to use or not enter and space key (0 for no, 1 for yes)
@@ -33,7 +23,8 @@ void reset_mode(struct termios *orig_termios) {
 int read_arrows(int use_enter_key) {
     struct termios orig_termios;
     tcgetattr(STDIN_FILENO, &orig_termios);
-    set_raw_mode(&orig_termios);
+    orig_termios.c_lflag &= ~(ICANON | ECHO);
+    tcsetattr(STDIN_FILENO, TCSAFLUSH, &orig_termios);
 
     int result = -1;
     
@@ -65,6 +56,6 @@ int read_arrows(int use_enter_key) {
         }
     }
     
-    reset_mode(&orig_termios);
+    tcsetattr(STDIN_FILENO, TCSAFLUSH, &orig_termios);
     return result;
 }

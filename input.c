@@ -1,6 +1,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <termios.h>
+#include <unistd.h>
 
 /// @brief Reads a single character from standard input and returns it.
 /// @return The character read from standard input. Returns '\0' if an error occurred.
@@ -39,4 +41,15 @@ char* read_string(int size) {
     }
 
     return string;
+}
+
+void wait_for_input(void) {
+    struct termios orig_termios;
+    tcgetattr(STDIN_FILENO, &orig_termios);
+    orig_termios.c_lflag &= ~(ICANON | ECHO);
+    tcsetattr(STDIN_FILENO, TCSAFLUSH, &orig_termios);
+
+    while (!getchar());
+
+    tcsetattr(STDIN_FILENO, TCSAFLUSH, &orig_termios);
 }
