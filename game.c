@@ -1,6 +1,8 @@
 #include <stdio.h>
 
 #include "arrow_input.h"
+#include "input.h"
+#include "menu.h"
 
 #define clear_screen() printf("\e[1;1H\e[2J")
 
@@ -177,4 +179,10 @@ void start_game(void) {
     } else {
         printf("Draw\n");
     }
+
+    printf("\n\tPress any key to go back to the menu...");
+    wait_for_input();
+    display_title();
+    show_menu();
+    
 }
