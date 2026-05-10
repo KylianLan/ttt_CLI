@@ -183,6 +183,6 @@ void start_game(void) {
     printf("\n\tPress any key to go back to the menu...");
     wait_for_input();
     display_title();
-    show_menu();
+    return;
     
 }
