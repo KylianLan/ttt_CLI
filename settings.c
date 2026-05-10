@@ -8,9 +8,6 @@
 #define clear_screen() printf("\e[1;1H\e[2J")
 
 
-char* player_x_name = "X";
-char* player_o_name = "O";
-
 void show_settings(int selection) {
     clear_screen();
     display_title();
@@ -25,7 +22,7 @@ void show_settings(int selection) {
     }
 }
 
-void settings(void) {
+void settings(struct players* p) {
     clear_screen();
     display_title();
     printf("\t\tSettings\n");
@@ -50,18 +47,15 @@ void settings(void) {
         clear_screen();
         display_title();
         printf("\tEnter name for player X: \n");
-        player_x_name = read_string(0);
+        p->player_x_name = read_string(0);
     } else if (selection == 1) {
         clear_screen();
         display_title();
         printf("\tEnter name for player O: \n");
-        player_o_name = read_string(0);
+        p->player_o_name = read_string(0);
     } else {
         clear_screen();
         display_title();
         return;
     }
-
-    settings();
-
 }

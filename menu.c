@@ -1,16 +1,14 @@
 #include <stdio.h>
 
 #include "arrow_input.h"
+#include "menu.h"
 #include "game.h"
 #include "settings.h"
 
 #define clear_screen() printf("\e[1;1H\e[2J")
 #define move_up_and_clear()  printf("\033[A\033[2K")
 
-struct players {
-    char* player_x_name;
-    char* player_o_name;
-};
+
 /**
  * @brief Displays the title, can be modified by editing title_ascii.txt
  */
@@ -50,14 +48,19 @@ void display_options(int selection) {
  */
 void show_menu(void) {
     display_title();
+
+    struct players p;
+    p.player_o_name = "O";
+    p.player_x_name = "X";
     
     int res = 0;
     int selection = 0;
     display_options(selection);
     while (1) {
-        res = read_arrows(1); // reads the arrows input to interact with the menu
         clear_screen();
         display_title();
+        display_options(selection);
+        res = read_arrows(1); // reads the arrows input to interact with the menu
         if (res == 1) {
             selection = (selection + 2) % 3;
         } else if (res == 2) {
@@ -74,12 +77,11 @@ void show_menu(void) {
                 return;
             }
             if (selection == 1) {
-                settings();
+                settings(&p);
             }
             if (selection == 0) {
-                start_game();
+                start_game(&p);
             }
         }
-        display_options(selection);
     }
 }

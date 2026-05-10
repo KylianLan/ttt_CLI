@@ -1,7 +1,7 @@
 #ifndef SETTINGS_H
-#define SETTING_H
+#define SETTINGS_H
 
 void show_settings(int selection);
-void settings(void);
+void settings(struct players* p);
 
 #endif

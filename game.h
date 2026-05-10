@@ -5,6 +5,6 @@ void green();
 void red();
 void reset_color();
 
-void start_game(void);
+void start_game(struct players* p);
 
 #endif

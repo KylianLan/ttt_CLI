@@ -161,7 +161,7 @@ int check_win(struct game* g) {
     return -1;
 }
 
-void start_game(void) {
+void start_game(struct players* p) {
     struct game g = init_game();
     display_board(&g, 0, 0);
     int winner = -1;
@@ -175,7 +175,7 @@ void start_game(void) {
     }
 
     if (winner != -1) {
-        printf("Player %c wins!\n", (winner == 0 ? 'X' : 'O'));
+        printf("%s wins!\n", (winner == 0 ? p->player_x_name : p->player_o_name));
     } else {
         printf("Draw\n");
     }
