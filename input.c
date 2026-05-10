@@ -17,7 +17,7 @@ char read_char(void) {
 }
 
 /// @brief Reads a string from standard input and returns it.
-/// @param size The maximum size of the string variable to be returned
+/// @param size The maximum size of the string variable to be returned including the null terminator (if 0, the default size of 100 will be used).
 /// @return A pointer to the read string, or NULL if an error occurred.
 /// @note The string has maximum length of 99 characters (plus the null terminator).
 /// @note The trailing newline character is automatically removed from the returned string.
