@@ -7,7 +7,7 @@ LFLAGS =
 OBJS = arrow_input.o game.o input.o main.o menu.o settings.o
 SOURCE = arrow_input.c game.c input.c main.c menu.c settings.c
 HEADER = arrow_input.h game.h input.h menu.h settings.h
-OUT = main
+OUT = ttt_CLI
 
 # Libraries
 LDLIBS = 
