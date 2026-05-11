@@ -8,10 +8,6 @@
 #define clear_screen() printf("\e[1;1H\e[2J")
 #define move_up_and_clear()  printf("\033[A\033[2K")
 
-<<<<<<< HEAD
-=======
-
->>>>>>> e53f88b (Merged the game branch, added option to change players' name and display the winner's name after winning a game)
 /**
  * @brief Displays the title, can be modified by editing title_ascii.txt
  */
@@ -60,14 +56,6 @@ void show_menu(void) {
     int selection = 0;
     display_options(selection);
     while (1) {
-<<<<<<< HEAD
-        res = read_arrows(1); // reads the arrows input to interact with the menu
-        if (res == 1 || res == 2) selection = !selection; 
-        /**
-         * selection is either 0 or 1
-         * 0 = start the game
-         * 1 = leave the game
-=======
         clear_screen();
         display_title();
         display_options(selection);
@@ -82,7 +70,6 @@ void show_menu(void) {
          * 0 = start the game
          * 1 = settings
          * 2 = leave the game
->>>>>>> e53f88b (Merged the game branch, added option to change players' name and display the winner's name after winning a game)
          */
         else if (res == 3 || res == 5) {
             if (selection == 2) {
