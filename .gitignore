@@ -11,4 +11,4 @@
 *.vsix
 a.out
 *.o
-main
+ttt_CLI
