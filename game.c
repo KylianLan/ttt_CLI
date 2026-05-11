@@ -161,7 +161,11 @@ int check_win(struct game* g) {
     return -1;
 }
 
+<<<<<<< HEAD
 void start_game(void) {
+=======
+void start_game(struct players* p) {
+>>>>>>> e53f88b (Merged the game branch, added option to change players' name and display the winner's name after winning a game)
     struct game g = init_game();
     display_board(&g, 0, 0);
     int winner = -1;
@@ -175,7 +179,11 @@ void start_game(void) {
     }
 
     if (winner != -1) {
+<<<<<<< HEAD
         printf("Player %c wins!\n", (winner == 0 ? 'X' : 'O'));
+=======
+        printf("%s wins!\n", (winner == 0 ? p->player_x_name : p->player_o_name));
+>>>>>>> e53f88b (Merged the game branch, added option to change players' name and display the winner's name after winning a game)
     } else {
         printf("Draw\n");
     }
@@ -183,6 +191,10 @@ void start_game(void) {
     printf("\n\tPress any key to go back to the menu...");
     wait_for_input();
     display_title();
+<<<<<<< HEAD
     show_menu();
+=======
+    return;
+>>>>>>> e53f88b (Merged the game branch, added option to change players' name and display the winner's name after winning a game)
     
 }
